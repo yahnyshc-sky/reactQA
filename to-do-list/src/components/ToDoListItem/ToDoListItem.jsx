@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import './ToDoListItem.css';
 
 const ToDoListItem = ({ data }) => {
-    const {_id, todoDescription, todoDateCreated, todoCompleted} = data;
+    const {id, todoDescription, todoDateCreated, todoCompleted} = data;
     const formattedDate = new Date(Date.parse(todoDateCreated)).toLocaleDateString('en-GB');
     const completedClass = todoCompleted ? 'completed' : '';
     
@@ -12,7 +12,7 @@ const ToDoListItem = ({ data }) => {
     
     const completedClassCombined = `${completedClass} ${overdueClass}`.trim();
 
-    const completed = todoCompleted ? 'Completed Task' : <Link to={`/edit/${_id}`} className="edit-link">Edit</Link>;
+    const completed = todoCompleted ? 'Completed Task' : <Link to={`/edit/${id}`} className="edit-link">Edit</Link>;
     
     return (
         <tr>

@@ -38,7 +38,7 @@ describe('Header', () => {
 
         it('renders the app title', () => {
             renderWithRouter(<Header />);
-            const heading = screen.getByRole('heading', { name: /todo app/i, level: 1 });
+            const heading = screen.getByRole('heading', { name: /todo app/i });
             expect(heading).toBeInTheDocument();
         });
 
