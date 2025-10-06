@@ -26,6 +26,7 @@ const AddPage = () => {
         setDescription('');
         setCompleted(false);
         setCreatedOn(new Date().toLocaleString());
+        window.location.replace('/');
     };
 
     return (
