@@ -5,7 +5,7 @@ import Footer from './Footer';
 describe('Footer', () => {
   it('renders the copyright text', () => {
     render(<Footer />);
-    const copyright = screen.getByText(/© QA Ltd 2019-/i);
+    const copyright = screen.getByText(/© QA Ltd 2019/i);
     expect(copyright).toBeInTheDocument();
   });
 
@@ -21,7 +21,7 @@ describe('Footer', () => {
   // Test <p> element classes
   it('applies the correct classes to the <p> element', () => {
       render(<Footer />);
-      const paragraph = screen.getByText(/© QA Ltd 2019-/i);
+      const paragraph = screen.getByText(/© QA Ltd 2019/i);
       expect(paragraph).toHaveClass('container');
       expect(paragraph).toHaveClass('align-center');
   });

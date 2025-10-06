@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
-import {useNavigate } from "react-router-dom";
-
-
+import {useNavigate} from "react-router";
 
 const AddPage = () => {
     const [description, setDescription] = useState('');
     const [createdOn, setCreatedOn] = useState(new Date());
     const [completed, setCompleted] = useState(false);
-
 
     const navigate = useNavigate();
 
@@ -48,7 +45,7 @@ const AddPage = () => {
             <Header />
 
             <main className="container my-4">
-                <h2 className="mb-4">Add/Edit Todo</h2>
+                <h2 className="mb-4">Add Todo</h2>
 
                 <form onSubmit={handleSubmit} aria-label="add-todo-form">
                     <div className="mb-3">
