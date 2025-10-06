@@ -1,5 +1,4 @@
-import './header.css';
-import { NavLink} from 'react-router';
+import {NavLink} from 'react-router';
 import logo from '../../assets/qalogo.svg';
 
 function Header() {
