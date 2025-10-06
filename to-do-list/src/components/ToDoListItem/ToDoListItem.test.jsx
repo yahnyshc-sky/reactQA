@@ -18,7 +18,7 @@ describe('ToDoListItem', () => {
 
     it('renders description, formatted date and edit link when not completed', () => {
         const data = {
-            _id: '123',
+            id: '123',
             todoDescription: 'Test Task',
             todoDateCreated: '2020-12-25T00:00:00Z',
             todoCompleted: false,
@@ -73,7 +73,7 @@ describe('ToDoListItem', () => {
         const isoPastDate = pastDate.toISOString();
 
         const data = {
-            _id: 'overdue1',
+            id: 'overdue1',
             todoDescription: 'Overdue Task',
             todoDateCreated: isoPastDate,
             todoCompleted: false,
@@ -102,7 +102,7 @@ describe('ToDoListItem', () => {
         const isoPastDate = pastDate.toISOString();
 
         const data = {
-            _id: 'both1',
+            id: 'both1',
             todoDescription: 'Both Conditions',
             todoDateCreated: isoPastDate,
             todoCompleted: true,

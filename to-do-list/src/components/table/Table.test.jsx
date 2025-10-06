@@ -44,7 +44,7 @@ describe('Table component', () => {
   it('fetches data and renders list items', async () => {
     render(<Table />);
 
-    await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('http://localhost:8000/data.json'));
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('http://localhost:8000/todos'));
 
     const rows = await screen.findAllByTestId('mock-item');
     expect(rows).toHaveLength(sampleData.length);
