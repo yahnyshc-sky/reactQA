@@ -4,7 +4,7 @@ import Table from '../components/table/Table';
 
 const Home = () => {
     return (
-        <div className="Home">
+        <div className="Home" style={{ textAlign: 'center', alignSelf: 'center' }}>
             <Header />
             <Table />
             <Footer />
