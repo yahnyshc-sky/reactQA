@@ -1,5 +1,4 @@
 import './header.css';
-import React from 'react';
 import { NavLink} from 'react-router';
 import logo from '../../assets/qalogo.svg';
 
