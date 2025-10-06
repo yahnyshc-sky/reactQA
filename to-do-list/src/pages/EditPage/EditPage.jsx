@@ -1,9 +1,9 @@
-import Header from "../components/header/Header";
-import Footer from "../components/footer/Footer";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function Edit() {
+function EditPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [todo, setTodo] = useState({ todoDescription: "", todoDateCreated: "", todoCompleted: false });
@@ -60,40 +60,52 @@ function Edit() {
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className="Edit" >
+        <div className="EditPage">
             <Header />
-            <h2>Edit Todo</h2>
-            <form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: "400px" }}>
-                <div style={{ marginBottom: "1rem" }}>
-                    <label>Description:</label>
-                    <input
-                        type="text"
-                        name="todoDescription"
-                        value={todo.todoDescription}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div style={{ marginBottom: "1rem" }}>
-                    <label >Created At:</label>
-                    <span>{new Date(Date.parse(todo.todoDateCreated)).toLocaleDateString('en-GB')}</span>
-                </div>
-                <div style={{ marginBottom: "1rem" }}>
-                    <label>
-                        Completed:
+
+            <main className="container my-4">
+                <h2 className="mb-4">Edit Todo</h2>
+
+                <form onSubmit={handleSubmit} aria-label="add-todo-form">
+                    <div className="mb-3">
+                        <label className="form-label">Description:</label>
                         <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Todo description"
+                            name="todoDescription"
+                            value={todo.todoDescription}
+                            onChange={handleChange}
+                            data-testid="description-input"
+                            required
+                        />
+                    </div>
+
+                    <p>Created on: {new Date(Date.parse(todo.todoDateCreated)).toLocaleDateString('en-GB')}</p>
+
+                    <div className="mb-3 d-flex align-items-center">
+                        <label className="mb-0" htmlFor="completed">
+                            Completed:
+                        </label>
+                        <input
+                            className="ms-2"
                             type="checkbox"
+                            id="completed"
                             name="todoCompleted"
                             checked={todo.todoCompleted}
                             onChange={handleChange}
                         />
-                    </label>
-                </div>
-                <button type="submit">Save</button>
-            </form>
+                    </div>
+
+                    <button type="submit" className="btn btn-dark" data-testid="submit-btn">
+                        Submit
+                    </button>
+                </form>
+            </main>
+
             <Footer />
         </div>
     );
 }
 
-export default Edit;
+export default EditPage;

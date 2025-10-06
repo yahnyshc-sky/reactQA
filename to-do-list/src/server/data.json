@@ -8,8 +8,14 @@
     },
     {
       "id": "1d0b",
-      "todoDescription": "Sample Todo 4",
+      "todoDescription": "Sample Todo 55",
       "todoDateCreated": "2021-05-04T15:30:00.000Z",
+      "todoCompleted": true
+    },
+    {
+      "id": "955b",
+      "todoDescription": "New todo",
+      "todoDateCreated": "Mon Oct 06 2025",
       "todoCompleted": false
     }
   ]
