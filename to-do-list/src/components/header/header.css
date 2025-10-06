@@ -1,0 +1,25 @@
+.qa-logo {
+	display: inline-block;
+}
+
+.navbar-title {
+	color: #222;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+}
+
+.navbar {
+    background: #14EAB8;
+}
+
+header .navbar {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+@media (max-width: 575px) {
+	.navbar-title {
+		font-size: 1rem; 
+	}
+}
+
