@@ -14,9 +14,9 @@ function Header() {
                     <img src={logo} alt="QA Ltd" width="100" className="qa-logo me-2" />
                 </a>
 
-                <a className="navbar-brand">
-                    <h1>Todo App</h1>
-                </a>
+                <h1 className="navbar-brand">
+                    Todo App
+                </h1>
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav me-auto">
                         <li>
