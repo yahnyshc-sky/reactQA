@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const Footer = () => {
+function Footer() {
     return (
         <footer
             className="py-4 mt-3 px-3"
@@ -13,4 +13,6 @@ export const Footer = () => {
         </p>
         </footer>
     );
-};
+}
+
+export default Footer;
