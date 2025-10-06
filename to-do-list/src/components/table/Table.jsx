@@ -6,11 +6,9 @@ function Table() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/data.json')
+        fetch('http://localhost:8000/todos')
             .then(response => response.json())
-            .then(data => {
-                setItems(data || []);
-            })
+            .then(data => setItems(data))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
@@ -27,7 +25,7 @@ function Table() {
                 </thead>
                 <tbody>
                     {items.map(item => (
-                        <ToDoListItem key={item._id} data={item} />
+                        <ToDoListItem key={item.id} data={item} />
                     ))}
                 </tbody>
             </table>
