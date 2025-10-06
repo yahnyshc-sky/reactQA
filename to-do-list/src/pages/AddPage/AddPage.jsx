@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
+import {useNavigate } from "react-router-dom";
+
 
 
 const AddPage = () => {
@@ -8,25 +10,37 @@ const AddPage = () => {
     const [createdOn, setCreatedOn] = useState(new Date());
     const [completed, setCompleted] = useState(false);
 
+
+    const navigate = useNavigate();
+
     useEffect(() => {
-        setCreatedOn(new Date());
+        setCreatedOn(new Date().toDateString());
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const todo = {
-            description,
-            createdOn,
-            completed,
+            todoDescription: description,
+            todoDateCreated: createdOn,
+            todoCompleted: completed
         };
-
-        console.log('Submitted todo:', todo);
-        alert('Todo submitted — check the console for details');
+        fetch(`http://localhost:8000/todos/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(todo),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    navigate("/");
+                } else {
+                    throw new Error("Failed to update todo");
+                }
+            })
+            .catch((error) => console.error("Error updating todo:", error));
 
         setDescription('');
         setCompleted(false);
         setCreatedOn(new Date().toLocaleString());
-        window.location.replace('/');
     };
 
     return (

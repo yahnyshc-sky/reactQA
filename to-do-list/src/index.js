@@ -4,6 +4,7 @@ import { BrowserRouter,  Routes, Route } from 'react-router';
 
 import Home from './pages/Home';
 import AddPage from './pages/AddPage/AddPage';
+import EditPage from './pages/Edit';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -16,6 +17,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add" element={<AddPage />} />
+        <Route path="/edit/:id" element={<EditPage />} />
       </Routes>
     </BrowserRouter>
   </div>
