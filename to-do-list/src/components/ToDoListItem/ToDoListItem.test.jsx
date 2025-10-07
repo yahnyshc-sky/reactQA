@@ -19,9 +19,9 @@ describe('ToDoListItem', () => {
     it('renders description, formatted date and edit link when not completed', () => {
         const data = {
             id: '123',
-            todoDescription: 'Test Task',
-            todoDateCreated: '2020-12-25T00:00:00Z',
-            todoCompleted: false,
+            description: 'Test Task',
+            created_at: '2020-12-25 00:00:00',
+            completed: false,
         };
 
         wrap(<ToDoListItem data={data} />);
@@ -40,12 +40,12 @@ describe('ToDoListItem', () => {
         expect(editLink).toHaveClass('edit-link');
     });
 
-    it('renders completed text and applies completed class when todoCompleted is true', () => {
+    it('renders completed text and applies completed class when completed is true', () => {
         const data = {
             _id: 'abc',
-            todoDescription: 'Complete Me',
-            todoDateCreated: '2021-01-01T12:00:00Z',
-            todoCompleted: true,
+            description: 'Complete Me',
+            created_at: '2021-01-01T12:00:00Z',
+            completed: true,
         };
 
         wrap(<ToDoListItem data={data} />);
@@ -74,9 +74,9 @@ describe('ToDoListItem', () => {
 
         const data = {
             id: 'overdue1',
-            todoDescription: 'Overdue Task',
-            todoDateCreated: isoPastDate,
-            todoCompleted: false,
+            description: 'Overdue Task',
+            created_at: isoPastDate,
+            completed: false,
         }; 
     
         wrap(<ToDoListItem data={data} />);
@@ -103,9 +103,9 @@ describe('ToDoListItem', () => {
 
         const data = {
             id: 'both1',
-            todoDescription: 'Both Conditions',
-            todoDateCreated: isoPastDate,
-            todoCompleted: true,
+            description: 'Both Conditions',
+            created_at: isoPastDate,
+            completed: true,
         };
 
         wrap(<ToDoListItem data={data} />);

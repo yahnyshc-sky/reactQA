@@ -2,23 +2,23 @@ import { Link } from 'react-router';
 import './ToDoListItem.css';
 
 const ToDoListItem = ({ data }) => {
-    const {id, todoDescription, todoDateCreated, todoCompleted} = data;
-    const formattedDate = new Date(Date.parse(todoDateCreated)).toLocaleDateString('en-GB');
-    const completedClass = todoCompleted ? 'completed' : '';
+    const {id, description, created_at, completed} = data;
+    const formattedDate = new Date(Date.parse(created_at)).toLocaleDateString('en-GB');
+    const completedClass = completed ? 'completed' : '';
     
     const now = new Date();
-    const overdue = new Date(Date.parse(todoDateCreated)) < now && !todoCompleted;
-    const overdueClass = overdue && !todoCompleted? 'overdue' : '';
+    const overdue = new Date(Date.parse(created_at)) < now && !completed;
+    const overdueClass = overdue && !completed? 'overdue' : '';
     
     const completedClassCombined = `${completedClass} ${overdueClass}`.trim();
 
-    const completed = todoCompleted ? 'Completed Task' : <Link to={`/edit/${id}`} className="edit-link">Edit</Link>;
+    const completed_str = completed ? 'Completed Task' : <Link to={`/edit/${id}`} className="edit-link">Edit</Link>;
     
     return (
         <tr>
-            <td className={completedClassCombined}>{todoDescription}</td>
+            <td className={completedClassCombined}>{description}</td>
             <td className={completedClassCombined}>{formattedDate}</td>
-            <td>{completed}</td>
+            <td>{completed_str}</td>
         </tr>
     )
 }

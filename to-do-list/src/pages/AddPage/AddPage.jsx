@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import {useNavigate} from "react-router";
 
 const AddPage = () => {
     const [description, setDescription] = useState('');
-    const [createdOn, setCreatedOn] = useState(new Date());
     const [completed, setCompleted] = useState(false);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setCreatedOn(new Date().toDateString());
-    }, []);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const todo = {
-            todoDescription: description,
-            todoDateCreated: createdOn,
-            todoCompleted: completed
+            description: description,
+            completed: completed
         };
-        fetch(`http://localhost:8000/todos/`, {
+        fetch(`http://localhost:5000/todo`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(todo),
@@ -37,7 +31,6 @@ const AddPage = () => {
 
         setDescription('');
         setCompleted(false);
-        setCreatedOn(new Date().toLocaleString());
     };
 
     return (
@@ -59,8 +52,6 @@ const AddPage = () => {
                             data-testid="description-input"
                         />
                     </div>
-
-                    <p>Created on: {new Date(createdOn).toLocaleString()}</p>
 
                     <div className="mb-3 d-flex align-items-center">
                         <label className="mb-0" htmlFor="completed">

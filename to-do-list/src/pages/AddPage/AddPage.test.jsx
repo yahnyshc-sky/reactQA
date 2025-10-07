@@ -44,7 +44,6 @@ test('renders AddPage form elements', () => {
     expect(screen.getByTestId('description-input')).toBeInTheDocument();
     expect(screen.getByTestId('completed-checkbox')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
-    expect(screen.getByText(/^Created on:/i)).toBeInTheDocument();
 });
 
 test('submits form with default completed=false and navigates on success', async () => {
@@ -57,16 +56,15 @@ test('submits form with default completed=false and navigates on success', async
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
     const [url, options] = global.fetch.mock.calls[0];
-    expect(url).toBe('http://localhost:8000/todos/');
+    expect(url).toBe('http://localhost:5000/todo');
     expect(options.method).toBe('POST');
     expect(options.headers['Content-Type']).toBe('application/json');
 
     const body = JSON.parse(options.body);
     expect(body).toMatchObject({
-        todoDescription: 'Buy milk',
-        todoCompleted: false,
+        description: 'Buy milk',
+        completed: false,
     });
-    expect(typeof body.todoDateCreated).toBe('string');
 
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/'));
 });
@@ -82,9 +80,8 @@ test('submits form with completed=true when checkbox is checked', async () => {
 
     const [, options] = global.fetch.mock.calls[0];
     const body = JSON.parse(options.body);
-    expect(body.todoDescription).toBe('Finish task');
-    expect(body.todoCompleted).toBe(true);
-    expect(typeof body.todoDateCreated).toBe('string');
+    expect(body.description).toBe('Finish task');
+    expect(body.completed).toBe(true);
 
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/'));
 });

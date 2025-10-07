@@ -2,3 +2,4 @@ flask
 pymysql
 pytest
 pytest-mock
+flask_cors
