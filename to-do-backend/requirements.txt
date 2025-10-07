@@ -1,2 +1,4 @@
 flask
 pymysql
+pytest
+pytest-mock
