@@ -2,26 +2,30 @@ from db.data_access import DataAccess
 from flask import jsonify
 
 def update_todo(data):
-    # Validate required fields
-    required_keys = ['id', 'description', 'completed']
-    if not all(k in data for k in required_keys):
-        raise ValueError(f"Missing one or more required fields: {required_keys}")
+    # 'id' is required; other fields are optional
+    if 'id' not in data:
+        raise ValueError("Missing required field: 'id'")
 
     todo_id = data['id']
-    description = data['description']
-    completed = data['completed']
+    set_clauses = []
+    params = []
+
+    if 'description' in data:
+        set_clauses.append("description = ?")
+        params.append(data['description'])
+    if 'completed' in data:
+        set_clauses.append("completed = ?")
+        params.append(data['completed'])
+
+    if not set_clauses:
+        raise ValueError("No updatable fields provided")
+
+    params.append(todo_id)
+    update_query = f"UPDATE todo SET {', '.join(set_clauses)} WHERE id = ?"
 
     dao = DataAccess()
+    dao.execute(update_query, params)
 
-    # Update the todo record
-    update_query = """
-        UPDATE todo
-        SET description = ?, completed = ?
-        WHERE id = ?
-    """
-    dao.execute(update_query, [description, completed, todo_id])
-
-    # Return the updated record
     return get_todo(todo_id)
 
 
