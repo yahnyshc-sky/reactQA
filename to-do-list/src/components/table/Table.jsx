@@ -6,7 +6,7 @@ function Table() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/todos')
+        fetch('http://localhost:5000/todo')
             .then(response => response.json())
             .then(data => setItems(data))
             .catch(error => console.error('Error fetching data:', error));
