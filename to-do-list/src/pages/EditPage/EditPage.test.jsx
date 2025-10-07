@@ -16,7 +16,7 @@ jest.mock('../../components/header/Header', () => () => <div data-testid="header
 jest.mock('../../components/footer/Footer', () => () => <div data-testid="footer" />);
 
 describe('EditPage', () => {
-	const TODO_API_URL = 'http://localhost:8000/todos/123';
+	const TODO_API_URL = 'http://localhost:5000/todo/123';
 
 	beforeEach(() => {
 		mockNavigate.mockReset();
@@ -27,9 +27,9 @@ describe('EditPage', () => {
 					ok: true,
 					json: () => Promise.resolve({
 						_id: '123',
-						todoDescription: 'Initial Desc',
-						todoDateCreated: '2024-06-10T00:00:00Z',
-						todoCompleted: true,
+						description: 'Initial Desc',
+						created_at: '2024-06-10T00:00:00Z',
+						completed: true,
 					}),
 				});
 			}
@@ -96,8 +96,8 @@ describe('EditPage', () => {
 		expect(patchCall).toBeTruthy();
 		expect(patchCall[0]).toBe(TODO_API_URL);
 		const body = JSON.parse(patchCall[1].body);
-		expect(body.todoDescription).toBe('Updated Task');
-		expect(body.todoCompleted).toBe(false); // toggled
+		expect(body.description).toBe('Updated Task');
+		expect(body.completed).toBe(false); // toggled
 	});
 
 	it('handles failed fetch on initial load gracefully', async () => {
@@ -118,9 +118,9 @@ describe('EditPage', () => {
 				ok: true,
 				json: () => Promise.resolve({
 					_id: '123',
-					todoDescription: 'Initial Desc',
-					todoDateCreated: '2024-06-10T00:00:00Z',
-					todoCompleted: false,
+					description: 'Initial Desc',
+					created_at: '2024-06-10 00:00:00',
+					completed: false,
 				}),
 			}))
 			.mockImplementationOnce(() => Promise.resolve({ ok: false }));
