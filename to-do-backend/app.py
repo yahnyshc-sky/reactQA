@@ -1,8 +1,15 @@
 from flask import Flask
+from routes.todo import todo_bp
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+
+    # Register blueprints
+    app.register_blueprint(todo_bp)
+
+    return app
 
 
-@app.route('/')
-def hello():
-    return '<h1>Hello, World!</h1>'
+if __name__ == '__main__':
+    app = create_app()
+    app.run(debug=True)
