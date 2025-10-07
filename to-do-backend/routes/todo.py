@@ -25,23 +25,26 @@ def add_todo():
 
     return jsonify({'id': dao.lastrowid, 'description': description, 'completed': completed}), 201
 
-@todo_bp.route('/<:todo_id>', methods=['GET'])
+@todo_bp.route('/<int:todo_id>', methods=['GET'])
 def get_todo_route(todo_id):
-    todo = None
     try:
         todo = get_todo(todo_id)
+        if not todo:
+            return jsonify({'error': 'Todo not found'}), 404
+        return jsonify({"todo": todo}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-    return jsonify({ "todo": todo }), 201
 
-@todo_bp.route('/<:todo_id>', methods=['PATCH'])
+
+@todo_bp.route('/<int:todo_id>', methods=['PATCH'])
 def update_todo_route(todo_id):
-    data = request.json or {}
-
-    updated_todo = None
     try:
+        data = request.get_json() or {}
+        data['id'] = todo_id  # Ensure the ID from the URL is used
         updated_todo = update_todo(data)
+        if not updated_todo:
+            return jsonify({'error': 'Todo not found'}), 404
+        return jsonify({"todo": updated_todo}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-    return jsonify({ "todo": updated_todo }), 201
 
