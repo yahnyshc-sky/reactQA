@@ -24,7 +24,7 @@ def test_add_todo_success(flask_app):
 
         assert status == 201
         data = response.get_json()
-        assert data == {"id": 123, "description": "New item", "completed": True}
+        assert data == {"description": "New item", "completed": True}
 
         exec_args, _ = dao.execute.call_args
         assert "INSERT INTO todo" in exec_args[0]
@@ -70,7 +70,7 @@ def test_get_todo_success(flask_app):
     with patch("services.todo_service.DataAccess") as MockDA:
         dao = Mock()
         # Simulate one matching row: (id, description, created_at, completed_int)
-        dao.query.return_value = [(42, "Single item", "2025-01-10 12:00:00", 1)]
+        dao.query.return_value = [{"id": 42, "description": "Single item", "created_at": "2025-01-10 12:00:00", "completed": True}]
         MockDA.return_value = dao
 
         with flask_app.app_context():
@@ -98,7 +98,7 @@ def test_update_todo_success(flask_app):
         dao = Mock()
         # First the service will likely run an UPDATE (execute), then a SELECT (query) to return updated row
         dao.execute.return_value = None
-        dao.query.return_value = [(7, "Updated desc", "2025-02-01 09:30:00", 0)]
+        dao.query.return_value = [{"id": 7, "description": "Updated desc", "completed": False}]
         MockDA.return_value = dao
 
         with flask_app.app_context():
@@ -137,7 +137,7 @@ def test_update_todo_missing_description_keeps_existing_when_not_provided(flask_
         dao = Mock()
         # After update, service fetches current row
         dao.execute.return_value = None
-        dao.query.return_value = [(11, "Existing desc", "2025-03-01 10:00:00", 1)]
+        dao.query.return_value = [{"id": 11, "description": "Existing desc", "created_at": "2025-03-01 10:00:00", "completed": True}]
         MockDA.return_value = dao
 
         with flask_app.app_context():

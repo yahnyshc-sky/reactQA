@@ -23,9 +23,9 @@ def test_get_todos_success(app):
         client = app.test_client()
         resp = client.get('/todo')
 
-        # GET should return 201 on success
-        assert resp.status_code == 201
-        assert resp.get_json() == {"todos": [{"id": 1, "description": "task", "completed": False}]}
+        # GET should return 200 on success
+        assert resp.status_code == 200
+        assert resp.get_json() == [{"id": 1, "description": "task", "completed": False}]
 
 
 def test_get_todos_service_exception_returns_400(app):
@@ -41,13 +41,13 @@ def test_get_todos_service_exception_returns_400(app):
 
 def test_add_todo_success(app):
     with patch("routes.todo.add_todo") as mock_add:
-        mock_add.return_value = {"id": 5, "description": "New item", "completed": True}
+        mock_add.return_value = ({"id": 5, "description": "New item", "completed": True}, 201)
 
         client = app.test_client()
         resp = client.post('/todo', json={"description": "New item", "completed": True})
 
         assert resp.status_code == 201
-        assert resp.get_json() == {"todo": {"id": 5, "description": "New item", "completed": True}}
+        assert resp.get_json() == {"id": 5, "description": "New item", "completed": True}
 
 
 def test_add_todo_service_exception_returns_400(app):
@@ -76,7 +76,7 @@ def test_update_id_override_calls_service_with_url_id(client):
         mock_update.return_value = {'id': 1, 'title': 'Ignored'}
         resp = client.patch('/todo/1', json={'id': 999, 'title': 'Ignored'})
         assert resp.status_code == 200
-        assert resp.get_json() == {'todo': {'id': 1, 'title': 'Ignored'}}
+        assert resp.get_json() == {'id': 1, 'title': 'Ignored'}
         mock_update.assert_called_once()
         called_arg = mock_update.call_args[0][0]
         assert called_arg['id'] == 1
