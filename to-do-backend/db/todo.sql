@@ -1,0 +1,8 @@
+
+CREATE TABLE todo (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  description TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  completed BOOL NOT NULL DEFAULT FALSE,
+  INDEX idx_created_at (created_at)
+);
