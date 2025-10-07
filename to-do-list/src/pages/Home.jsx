@@ -7,7 +7,6 @@ const Home = () => {
         <div className="Home" style={{ textAlign: 'center', alignSelf: 'center' }}>
             <Header />
             <Table />
-
             <Footer />
         </div>
     );
