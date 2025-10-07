@@ -1,3 +1,5 @@
+import pymysql
+
 from db.data_access import DataAccess
 from flask import jsonify
 
@@ -11,17 +13,17 @@ def update_todo(data):
     params = []
 
     if 'description' in data:
-        set_clauses.append("description = ?")
+        set_clauses.append("description = %s")
         params.append(data['description'])
     if 'completed' in data:
-        set_clauses.append("completed = ?")
+        set_clauses.append("completed = %s")
         params.append(data['completed'])
 
     if not set_clauses:
         raise ValueError("No updatable fields provided")
 
     params.append(todo_id)
-    update_query = f"UPDATE todo SET {', '.join(set_clauses)} WHERE id = ?"
+    update_query = f"UPDATE todo SET {', '.join(set_clauses)} WHERE id = %s"
 
     dao = DataAccess()
     dao.execute(update_query, params)
@@ -31,24 +33,17 @@ def update_todo(data):
 
 def get_todo(todo_id):
     dao = DataAccess()
-    query = """
-        SELECT id, description, created_at, completed
-        FROM todo
-        WHERE id = ?
-    """
-    result = dao.query(query, [todo_id])
+    try:
+        result = dao.query("SELECT id, description, created_at, completed FROM todo WHERE id = %s", (todo_id,))
+    except pymysql.MySQLError as e:
+        raise RuntimeError(f'Database query error: {e}')
 
     if not result:
         return None
 
-    todo = result[0]
+    # todo = result[0]
     # Convert to a dictionary for easier consumption
-    return {
-        "id": todo[0],
-        "description": todo[1],
-        "created_at": todo[2],
-        "completed": bool(todo[3])
-    }
+    return result[0]
 
 def add_todo(data):
     description = data.get('description')
@@ -59,15 +54,16 @@ def add_todo(data):
 
     try:
         dao = DataAccess()
-        dao.execute("INSERT INTO todo (description, completed) VALUES (%s, %s);",(description, completed))
-        return jsonify({'id': dao.lastrowid, 'description': description, 'completed': completed}), 201
+        lastrowid = dao.execute("INSERT INTO todo (description, completed) VALUES (%s, %s);",(description, completed))
+        todo = get_todo(lastrowid)
+        return jsonify({'description': description, 'completed': completed, "created_at": todo["created_at"]}), 201
     except Exception as e:
         raise e
 
 def get_all_todos():
     try:
         dao = DataAccess()
-        todos = dao.query("SELECT id, description, created_at, completed FROM todo ORDER BY created_at DESC;")
+        todos = dao.query("SELECT id, description, created_at, completed FROM todo ORDER BY created_at ASC;")
         return todos
     except Exception as e:
         raise e

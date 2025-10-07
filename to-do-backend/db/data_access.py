@@ -49,6 +49,7 @@ class DataAccess:
             self._connect()
             self.__cursor.execute(query, params)
             self.__connection.commit()
+            return self.__cursor.lastrowid
         except pymysql.MySQLError as e:
             self.__connection.rollback()
             raise RuntimeError(f"Database query execution failed: {e}")
